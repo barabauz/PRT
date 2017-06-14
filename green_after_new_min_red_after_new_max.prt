@@ -1,0 +1,31 @@
+newmax,newmin,a,b = call newmaxmin
+openHA, highHA, lowHA, closeHA = CALL HAcandle
+
+//Verifichiamo se la candela attuale è una candela rossa che segue una candela di nuovo massimo giornaliero
+//if newmax[1]<>0 and closeHA<openHA then
+//redafternewmax=redafternewmax[1] or 1
+//else
+//redafternewmax=redafternewmax[1] or 0
+//endif
+//
+////Verifichiamo se la candela attuale è una candela verde che segue una candela di nuovo minimo giornaliero
+//if newmin[1]<>0 and closeHA>openHA then
+//greenafternewmin=greenafternewmin[1] or 1
+//else
+//greenafternewmin=greenafternewmin[1] or 0
+//endif
+corpo,hi,lo  = call corpoHA
+
+if ((closeHA<openHA AND newmax[1] and corpo) OR redafternewmax[1]) and not (newmax or newmin) then
+redafternewmax = 1
+else
+redafternewmax =0
+endif
+
+if ((closeHA>openHA AND newmin[1] and corpo) OR greenafternewmin[1]) and not (newmax or newmin) then
+greenafternewmin = 1
+else
+greenafternewmin = 0
+endif
+
+return greenafternewmin, redafternewmax, a,b, highHA, lowHA, hi,lo
